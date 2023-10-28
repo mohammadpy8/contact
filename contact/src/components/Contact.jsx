@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import ContactList from "./ContactList";
+import toast, { Toaster } from "react-hot-toast";
 
 const Contact = () => {
   const [contacts, setContacts] = useState([]);
@@ -10,14 +11,25 @@ const Contact = () => {
     phone: "",
   });
 
+  const deleteHandle = (id) => {
+    const deleteContacts = contacts.filter((items) => items.id !== id);
+    setContacts(deleteContacts);
+  };
+
+  const generateID = () => {
+    const ID = crypto.randomUUID();
+    return ID;
+  }
+
   const changeHandle = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    setContact({ ...contact, [name]: value });
+    setContact({ ...contact, [name]: value, id:generateID() });
   };
 
   const addHandle = () => {
     setContacts((contacts) => [...contacts, contact]);
+    toast.success("شماره تلفن با موفقیت ثبت شد!");
     setContact({
       name: "",
       lastName: "",
@@ -59,7 +71,8 @@ const Contact = () => {
         />
         <button onClick={addHandle}>Add Contact</button>
       </div>
-      <ContactList contacts={contacts} />
+      <ContactList contacts={contacts} deleteContacts={deleteHandle} />
+      <Toaster position="top-center" reverseOrder={false} />
     </div>
   );
 };
