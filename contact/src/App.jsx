@@ -1,12 +1,14 @@
 import React from "react";
 import Headers from "./components/Headers";
 import Contact from "./components/Contact";
+import Main from "./pages";
 
 function App() {
   return (
     <>
-      <Headers />
-      <Contact />
+      {/* <Headers />
+      <Contact /> */}
+      <Main />
     </>
   );
 }
