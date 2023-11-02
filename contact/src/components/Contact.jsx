@@ -11,31 +11,55 @@ const Contact = () => {
     phone: "",
   });
 
+  const removeContactLocalStorage = () => {
+    const reCo = localStorage.removeItem("contacts");
+    return reCo;
+  };
+
   const deleteHandle = (id) => {
     const deleteContacts = contacts.filter((items) => items.id !== id);
+    toast.success("حذف شذ");
+    console.log(deleteContacts);
     setContacts(deleteContacts);
+    removeContactLocalStorage();
   };
+  console.log(contacts);
 
   const generateID = () => {
     const ID = crypto.randomUUID();
     return ID;
-  }
+  };
 
   const changeHandle = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    setContact({ ...contact, [name]: value, id:generateID() });
+    setContact({ ...contact, [name]: value, id: generateID() });
   };
+  console.log(contacts);
 
   const addHandle = () => {
-    setContacts((contacts) => [...contacts, contact]);
-    toast.success("شماره تلفن با موفقیت ثبت شد!");
-    setContact({
-      name: "",
-      lastName: "",
-      email: "",
-      phone: "",
-    });
+    if (
+      contact.email === "" ||
+      contact.lastName === "" ||
+      contact.name === "" ||
+      contact.phone === ""
+    ) {
+      toast.error("تمام فیلد ها را پر کنید");
+    } else {
+      saveLocalStorage(contacts);
+      setContacts((contacts) => [...contacts, contact]);
+      toast.success("شماره تلفن با موفقیت ثبت شد!");
+      setContact({
+        name: "",
+        lastName: "",
+        email: "",
+        phone: "",
+      });
+    }
+  };
+  const saveLocalStorage = (value) => {
+    const saveLocal = localStorage.setItem("contacts", JSON.stringify(value));
+    return saveLocal;
   };
 
   return (
@@ -71,7 +95,7 @@ const Contact = () => {
         />
         <button onClick={addHandle}>Add Contact</button>
       </div>
-      <ContactList contacts={contacts} deleteContacts={deleteHandle} />
+      <ContactList contacts={contacts} deleteHandle={deleteHandle} />
       <Toaster position="top-center" reverseOrder={false} />
     </div>
   );

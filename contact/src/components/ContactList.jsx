@@ -1,6 +1,14 @@
 import React from "react";
 
-const ContactList = ({ contacts, deleteHandle }) => {
+const ContactList = ({ contacts,deleteHandle }) => {
+
+  const getLocalStorage = () => {
+    const getContacts = localStorage.getItem("contacts");
+    const parseContacts = JSON.parse(getContacts);
+    return parseContacts;
+  };
+
+  const contactss = getLocalStorage();
   console.log(contacts);
   return (
     <div>

@@ -6,9 +6,9 @@ import Main from "./pages";
 function App() {
   return (
     <>
-      {/* <Headers />
-      <Contact /> */}
-      <Main />
+      <Headers />
+      <Contact />
+      {/* <Main /> */}
     </>
   );
 }
