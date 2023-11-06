@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 
-const ContactList = ({ contacts,deleteHandle }) => {
+const ContactList = ({ contacts, deleteHandle }) => {
+
+  const [contactsData, setContactsData] = useState(null);
 
   const getLocalStorage = () => {
     const getContacts = localStorage.getItem("contacts");
@@ -8,12 +10,23 @@ const ContactList = ({ contacts,deleteHandle }) => {
     return parseContacts;
   };
 
-  const contactss = getLocalStorage();
-  console.log(contacts);
+  const localStorageHandle = () => {
+    let contactss = getLocalStorage();
+    if (contactss === null || undefined || contactss.lenght === 0) {
+      contactss = contacts;
+      return contactss;
+    } else {
+      contactss = getLocalStorage();
+      return contactss;
+    }
+  };
+
+  const newContacts = localStorageHandle();
+
   return (
     <div>
       <div>
-        {contacts.map((contact) => {
+        {newContacts.map((contact) => {
           const { name, lastName, email, phone, id } = contact;
           return (
             <div key={id}>

@@ -11,19 +11,12 @@ const Contact = () => {
     phone: "",
   });
 
-  const removeContactLocalStorage = () => {
-    const reCo = localStorage.removeItem("contacts");
-    return reCo;
-  };
-
   const deleteHandle = (id) => {
     const deleteContacts = contacts.filter((items) => items.id !== id);
     toast.success("حذف شذ");
     console.log(deleteContacts);
     setContacts(deleteContacts);
-    removeContactLocalStorage();
   };
-  console.log(contacts);
 
   const generateID = () => {
     const ID = crypto.randomUUID();
@@ -35,7 +28,6 @@ const Contact = () => {
     const value = event.target.value;
     setContact({ ...contact, [name]: value, id: generateID() });
   };
-  console.log(contacts);
 
   const addHandle = () => {
     if (
